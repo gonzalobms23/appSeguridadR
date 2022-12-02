@@ -14,6 +14,11 @@ class MyTokenObtainPairSerializer(TokenObtainPairSerializer):
         token['id'] = user.id
         return token
 
+    def validate(self, attrs):
+        data = super().validate(attrs)
+        data["id"]=str(self.user.id)
+        return data
+
 class CargoSerializer(serializers.ModelSerializer):
     class Meta:
         model=Cargo
