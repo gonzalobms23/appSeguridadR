@@ -1,5 +1,6 @@
 from django.contrib.auth.hashers import make_password
 from rest_framework import serializers
+from django.contrib.auth.hashers import make_password
 from rest_framework_simplejwt.serializers import TokenObtainPairSerializer
 from rest_framework.fields import SerializerMethodField
 from drf_writable_nested.serializers import WritableNestedModelSerializer
@@ -67,6 +68,9 @@ class ReporteSerializer(serializers.ModelSerializer):
         fields="__all__"
 
 class UsuarioSerializer(serializers.ModelSerializer):
+    def validate_password(self, value: str) -> str:
+        return make_password(value)
+
     class Meta:
         model=Usuario
         fields="__all__"
